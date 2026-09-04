@@ -1,0 +1,11 @@
+diff --git a/python/sglang/srt/layers/quantization/fp8_utils.py b/python/sglang/srt/layers/quantization/fp8_utils.py
+index f652dce..369d4ed 100644
+--- a/python/sglang/srt/layers/quantization/fp8_utils.py
++++ b/python/sglang/srt/layers/quantization/fp8_utils.py
+@@ -379,5 +379,5 @@ if flashinfer_per_tensor_fp8_supported():
+             x_scale.reshape(1),
+             weight_scale.reshape(1),
+             out_dtype,
+-            backend="cublas",
++            backend="cutlass" if _is_sm120_supported else "cublas",
+         ).view(m, n)

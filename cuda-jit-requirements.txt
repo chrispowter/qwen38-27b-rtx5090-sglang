@@ -1,0 +1,5 @@
+# Keep nvcc, its back end, and CCCL aligned with PyTorch's CUDA 13.0 runtime.
+nvidia-cuda-cccl==13.0.85
+nvidia-cuda-crt==13.0.88
+nvidia-cuda-nvcc==13.0.88
+nvidia-nvvm==13.0.88
