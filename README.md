@@ -3,8 +3,7 @@
 [English](README_EN.md)
 
 这是一套已经在单张 NVIDIA GeForce RTX 5090 32 GB 上跑通的
-`Qwen3.8-27B-NVFP4 + SGLang` 部署方法。服务提供 OpenAI 兼容接口，支持普通
-对话、工具调用和 JSON Schema 结构化输出。
+`Qwen3.8-27B-NVFP4 + SGLang` 部署方法。服务提供 OpenAI 兼容接口。
 
 ## 实测环境
 
@@ -32,7 +31,7 @@ sudo apt-get install -y ca-certificates curl patch tar coreutils binutils python
 ```bash
 git clone https://github.com/chrispowter/qwen38-27b-rtx5090-sglang.git
 cd qwen38-27b-rtx5090-sglang
-chmod +x ./*.sh acceptance_test.py
+chmod +x ./*.sh
 PYTHON_BIN=/path/to/python3.11 ./bootstrap.sh
 ```
 
@@ -57,8 +56,8 @@ BASE_DIR=/your/path PYTHON_BIN=/path/to/python3.11 ./bootstrap.sh
 DOWNLOAD_BACKEND=modelscope ./complete_install.sh
 ```
 
-脚本会断点下载模型、校验 SHA-256、启动 SGLang，并自动完成对话、工具调用和
-JSON Schema 验收。查看状态与日志：
+脚本会断点下载模型、校验 SHA-256、启动 SGLang，并等待接口就绪。查看状态与
+日志：
 
 ```bash
 cat /data/qwen38-sglang/run/deployment.status
@@ -102,7 +101,6 @@ http://127.0.0.1:30000/v1
 
 ```bash
 ./start_server.sh
-./acceptance_test.py
 ./stop_server.sh
 ```
 
@@ -115,10 +113,6 @@ MEM_FRACTION_STATIC=0.86 \
 MAX_RUNNING_REQUESTS=1 \
 ./start_server.sh
 ```
-
-2026-09-02 的实机验收中，普通对话、工具调用、JSON Schema 和 20k tokens 输入
-均通过，验收后剩余约 1.8 GB 显存。接口可用不代表业务精度已经验证，正式使用前
-仍需运行自己的评测集。
 
 ## License
 

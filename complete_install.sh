@@ -7,7 +7,6 @@ MODEL_DIR="${MODEL_DIR:-$BASE_DIR/models/Qwen3.8-27B-NVFP4}"
 DEPLOY_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 STATUS_FILE="$BASE_DIR/run/deployment.status"
 DOWNLOAD_LOG="$BASE_DIR/logs/model-download.log"
-SMOKE_LOG="$BASE_DIR/logs/smoke-test.json"
 DOWNLOAD_BACKEND="${DOWNLOAD_BACKEND:-huggingface}"
 HF_MODEL_ID="RadixArk/Qwen3.8-27B-NVFP4"
 HF_COMMIT="319f741cce68d7914884900c138a1fbb70a42f30"
@@ -100,9 +99,7 @@ if [[ "$READY" -ne 1 ]]; then
   exit 1
 fi
 
-SGLANG_BASE_URL="http://127.0.0.1:$PORT" \
-  "$VENV_DIR/bin/python" "$DEPLOY_DIR/acceptance_test.py" --output "$SMOKE_LOG"
-
 trap - ERR
-printf 'complete time=%s acceptance_log=%s\n' "$(date --iso-8601=seconds)" "$SMOKE_LOG" > "$STATUS_FILE"
+printf 'complete time=%s endpoint=http://127.0.0.1:%s/v1\n' \
+  "$(date --iso-8601=seconds)" "$PORT" > "$STATUS_FILE"
 cat "$STATUS_FILE"

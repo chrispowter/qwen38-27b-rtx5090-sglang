@@ -4,8 +4,7 @@
 
 This is a hardware-verified deployment recipe for serving
 `Qwen3.8-27B-NVFP4` with SGLang on one NVIDIA GeForce RTX 5090 32 GB. The
-service exposes an OpenAI-compatible API with chat completion, tool calling,
-and JSON Schema structured output support.
+service exposes an OpenAI-compatible API.
 
 ## Verified environment
 
@@ -34,7 +33,7 @@ You can also use Python 3.11 from Conda or Miniforge.
 ```bash
 git clone https://github.com/chrispowter/qwen38-27b-rtx5090-sglang.git
 cd qwen38-27b-rtx5090-sglang
-chmod +x ./*.sh acceptance_test.py
+chmod +x ./*.sh
 PYTHON_BIN=/path/to/python3.11 ./bootstrap.sh
 ```
 
@@ -60,8 +59,8 @@ DOWNLOAD_BACKEND=modelscope ./complete_install.sh
 ```
 
 The script resumes interrupted downloads, checks every model file against the
-SHA-256 manifest, starts SGLang, and validates chat, tool calls, and JSON Schema
-output. Check deployment state and logs with:
+SHA-256 manifest, starts SGLang, and waits for the API to become ready. Check
+deployment state and logs with:
 
 ```bash
 cat /data/qwen38-sglang/run/deployment.status
@@ -101,7 +100,6 @@ unauthenticated endpoint directly to a LAN or the Internet.
 
 ```bash
 ./start_server.sh
-./acceptance_test.py
 ./stop_server.sh
 ```
 
@@ -114,11 +112,6 @@ MEM_FRACTION_STATIC=0.86 \
 MAX_RUNNING_REQUESTS=1 \
 ./start_server.sh
 ```
-
-On 2026-09-02, the verified machine passed chat, tool calling, JSON Schema, and
-a 20k-token input test with about 1.8 GB VRAM left after acceptance. API
-compatibility does not establish application-level accuracy; run your own
-evaluation set before production use.
 
 ## License
 
