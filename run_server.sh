@@ -10,7 +10,7 @@ DEPLOY_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 "$DEPLOY_DIR/apply_sglang_patches.sh"
 "$DEPLOY_DIR/verify_model.sh"
 
-PYTHON_SITE="$($VENV_DIR/bin/python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+PYTHON_SITE="$("$VENV_DIR/bin/python" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
 CUDA_ROOT="$PYTHON_SITE/nvidia/cu13"
 
 if [[ ! -d "$CUDA_ROOT/lib" ]]; then
